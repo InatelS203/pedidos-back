@@ -12,14 +12,14 @@ class OrderModel:
         db = get_db()
         order_collection = db['PEDIDOS']
         order = order_collection.find_one({"order_info.order_number": int(order_number)})
-        order_collection.update_one({"_id": order["_id"]}, {"$set": {"order_info.status": "done"}})
-        result = order_collection.find_one(sort=[("order_info.order_number", int(order_number))])
-
-        
-        next_order = order_collection.find_one({"order_info.order_number": result["order_info"]["order_number"] + 1})
-        if next_order:
-            order_collection.update_one({"_id": next_order["_id"]}, {"$set": {"order_info.status": "doing"}})
-        return result
+        if order:
+            order_collection.update_one({"_id": order["_id"]}, {"$set": {"order_info.status": "done"}})
+            
+            next_order = order_collection.find_one({"order_info.order_number": int(order_number) + 1})
+            if next_order:
+                order_collection.update_one({"_id": next_order["_id"]}, {"$set": {"order_info.status": "doing"}})
+        order = order_collection.find_one({"order_info.order_number": int(order_number)})
+        return order
     
     @staticmethod
     def get_last_order_number():
