@@ -1,5 +1,5 @@
 from flask import Blueprint
-from services.stock_service import get_stock_items
+from controllers.stock_controller import get_stock_items
 from bson.json_util import dumps
 
 stock_bp = Blueprint('stock', __name__)
