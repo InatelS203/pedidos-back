@@ -11,10 +11,10 @@ def get_order():
 
 @order_bp.route('/api/order/<order_number>', methods=['GET'])
 def get_order_by_number(order_number):
-    order = order_controller.get_order_by_number(order_number) 
+    order = order_controller.get_order_by_number(order_number)
     return dumps(order)
 
-@order_bp.route('/api/order' , methods=['POST'])
+@order_bp.route('/api/order', methods=['POST'])
 def create_order():
     order = request.json
     order_id = order_controller.insert_order(order)

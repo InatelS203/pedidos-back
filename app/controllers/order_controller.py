@@ -1,13 +1,14 @@
-from models.order_model import OrderModel
+from commands.invoker import CommandInvoker
+from commands.order_commands import CreateOrderCommand, GetOrderCommand, GetOrderByNumberCommand
 
 def get_order_items():
-    order = OrderModel.get_order()
-    return order
+    command = GetOrderCommand()
+    return CommandInvoker().execute(command)
 
 def get_order_by_number(order_number):
-    order = OrderModel.get_order_by_number(order_number)
-    return order
+    command = GetOrderByNumberCommand(order_number)
+    return CommandInvoker().execute(command)
 
 def insert_order(order):
-    order = OrderModel.insert_order(order)
-    return order
+    command = CreateOrderCommand(order)
+    return CommandInvoker().execute(command)
